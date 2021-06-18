@@ -1,0 +1,8 @@
+{
+  "name": "BLEeper",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "11dca8f6"
+}
