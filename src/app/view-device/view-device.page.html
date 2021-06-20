@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="device">
+  <ion-item>
+    <ion-icon name="bluetooth-outline" [color]="device.rssi ? 'primary' : ''"></ion-icon>
+    <ion-label class="ion-text-wrap">
+      <h2>
+        {{ device.name }}
+        <span class="rssi">
+          <ion-note>{{ device.rssi }}</ion-note>
+        </span>
+      </h2>
+      {{ device.id }}
+    </ion-label>
+  </ion-item>
+
+  <ion-button (click)="data.autoConnect(device)">AutoConnect!</ion-button>
+  <div class="ion-padding">
+    <h1>Advertising</h1>
+      {{ device.advertising | json }}
+  </div>
+
+    <div class="ion-padding">
+    <h1>Services</h1>
+      {{ device.services | json }}
+  </div>
+
+    <div class="ion-padding">
+    <h1>Characteristics</h1>
+      {{ device.characteristics | json }}
+  </div>
+
+  <ion-button (click)="data.probe(device)">Probe (Because Android sucks)</ion-button>
+</ion-content>

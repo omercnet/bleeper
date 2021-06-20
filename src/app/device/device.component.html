@@ -1,0 +1,13 @@
+<ion-item *ngIf="device" [routerLink]="'/device/' + device.id" [detail]="false">
+  <ion-icon name="bluetooth-outline" [color]="device.rssi ? 'primary' : ''"></ion-icon>
+  <ion-label class="ion-text-wrap">
+    <h2>
+      {{ device.name }}
+      <span class="rssi">
+        <ion-note>{{ device.rssi }}</ion-note>
+        <ion-icon name="chevron-forward" size="small" *ngIf="isIos()"></ion-icon>
+      </span>
+    </h2>
+    <h4>{{ device.id }}</h4>
+  </ion-label>
+  </ion-item>

@@ -1,0 +1,11 @@
+{
+	"appId": "io.omer.bleeper",
+	"appName": "BLEeper",
+	"webDir": "www",
+	"plugins": {
+		"LocalNotifications": {
+			"iconColor": "#488AFF",
+			"sound": "beep.wav"
+		}
+	}
+}

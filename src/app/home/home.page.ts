@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { DataService, Message } from '../services/data.service';
+import { DataService, Device } from '../services/data.service';
+import { BLE } from '@ionic-native/ble/ngx';
 
 @Component({
   selector: 'app-home',
@@ -7,16 +8,38 @@ import { DataService, Message } from '../services/data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private data: DataService) {}
+  constructor(
+    private data: DataService,
+    private ble: BLE,
+  ) {
+    this.ble.enable()
+    .then(() => console.log('BLE Enabled!'))
+    .catch((e) => console.error(`Failed BLE - ${e}`));
+  }
 
   refresh(ev) {
+    this.ble.startScan(
+      []
+    ).subscribe((device) => {
+      if (device.rssi > -90) {
+        this.data.addDevice(device);
+      }
+    });
     setTimeout(() => {
-      ev.detail.complete();
+      this.ble.stopScan();
+      this.data.clearDevices();
+      if (ev) {
+        ev.detail.complete();
+      }
     }, 3000);
+
   }
 
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  getDevices(): Device[] {
+    return this.data.getDevices().sort((a, b) => {
+      if (!a.rssi) { return 1;}
+      if (!b.rssi) { return -1;}
+      return b.rssi - a.rssi;
+    });
   }
-
 }
